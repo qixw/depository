@@ -1,0 +1,7 @@
+#surefire
+#Mon Feb 26 17:53:03 CST 2018
+user.dir=D\:\\jlccode\\my-test\\test-util
+maven.repo.local=C\:\\Users\\admin\\.m2\\repository
+idea.version=15.0.2
+localRepository=C\:\\Users\\admin\\.m2\\repository
+basedir=D\:\\jlccode\\my-test\\test-util
