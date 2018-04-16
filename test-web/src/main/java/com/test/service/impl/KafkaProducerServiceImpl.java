@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.util.SerializationUtils;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -25,22 +25,22 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 	KafkaTemplate kafkaTemplate;
 
 	@Override
-	public void sendMQ(Map map) {
+	public void sendMQ() {
 
 		//主题
-
+		logger.info("定时任务调度开始!");
 		try {
 			//分区
-			int partition = new Random().nextInt(10) + 1;
+			int partition = new Random().nextInt(10);
 			//int partition =Integer.parseInt(map.get("partition").toString());
 			//key
 			String key = "test"+new Date().getTime();
 			//value
 			String value ="kafka producer first mesage"+new Date().getTime();
-			kafkaTemplate.send(TEST_TOPIC,partition,key,value);
+			kafkaTemplate.send(TEST_TOPIC,partition,key, SerializationUtils.serialize(value));
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("kafka 消息发送失败");
+			logger.error("kafka 消息发送失败",e);
 		}
 	}
 }

@@ -66,15 +66,15 @@
     <bean id="testAspect" class="com.test.apsect.TestAspect"></bean>
 
     <!--声明自动为spring容器中那些配置@aspectJ切面的bean创建代理，织入切面-->
-    <aop:aspectj-autoproxy expose-proxy="true"/>
+    <!--<aop:aspectj-autoproxy expose-proxy="true"/>
     <aop:config>
-             <!--定义通知-->
+             &lt;!&ndash;定义通知&ndash;&gt;
              <aop:advisor advice-ref="txAdvice"  pointcut="execution(public * com.test.service.*Service.*(..))" order="2"/>
-             <!--定义切面-->
+             &lt;!&ndash;定义切面&ndash;&gt;
             <aop:aspect ref="testAspect" order="1">
-                  <!--切入点-->
+                  &lt;!&ndash;切入点&ndash;&gt;
                 <aop:pointcut id="testPoint" expression="execution(public * com.test.service.*Service.*(..))"/>
                 <aop:around pointcut-ref="testPoint" method="processed"/>
             </aop:aspect>
-    </aop:config>
+    </aop:config>-->
 </beans>

@@ -1,7 +1,5 @@
 package com.test.service;
 
-import java.util.Map;
-
 /**
  * @author ：qixuewei@jinlianchu.com
  * @Description ：
@@ -10,5 +8,5 @@ import java.util.Map;
  */
 public interface KafkaProducerService {
 
-	public void sendMQ(Map map);
+	public void sendMQ();
 }
