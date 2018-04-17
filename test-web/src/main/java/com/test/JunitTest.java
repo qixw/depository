@@ -1,18 +1,20 @@
 package com.test;
 
 import com.test.service.TUserService;
-import com.test.util.SignatureAlgorithm;
-import com.test.util.SignatureUtils;
+import com.test.util.ChineseNameUtil;
 import com.test.vo.UserVo;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
-import java.security.PrivateKey;
-import java.util.*;
+import java.security.MessageDigest;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * @author ：qixuewei@jinlianchu.com
@@ -28,17 +30,50 @@ public class JunitTest {
 	TUserService tUserService;
 	@Test
 	public void test()throws Exception{
+		for(int i=0;i<1000;i++){
 		UserVo userVo = new UserVo();
-		userVo.setUserName("zhangsansan");
-		userVo.setPhone("17640541025");
+		userVo.setUserName(ChineseNameUtil.getChinesName());
+		//userVo.setUserName("张三");
+		//Math.random();
+		userVo.setPhone(getTel());
 		userVo.setIsLimit(1);
-		PrivateKey privateKey = SignatureUtils.getRsaPkcs8PrivateKey(Base64.decodeBase64("qixuewei"));
-		byte[] sign = SignatureUtils.sign(SignatureAlgorithm.SHA1WithRSA, privateKey, "123456");
-		String password = Base64.encodeBase64String(sign);
+		//PrivateKey privateKey = SignatureUtils.getRsaPkcs8PrivateKey(Base64.decodeBase64("qixuewei"));
+		//byte[] sign = SignatureUtils.sign(SignatureAlgorithm.SHA1WithRSA, privateKey, "123456");
+		//String password = Base64.encodeBase64String(sign);
+		String password = md5Util("12345");
 		userVo.setPassword(password);
-		tUserService.insert(userVo);
+		userVo.setRegDate(new Date());
+
+			tUserService.insert(userVo);
+		}
 	}
 
+	/**
+	 * 随机生成手机号
+	 */
+	private static String[] telFirst="134,135,136,137,138,139,150,151,152,157,158,159,130,131,132,155,156,133,153,176,177".split(",");
+	private static String getTel() {
+		String number = telFirst[(int)Math.random()*(telFirst.length)];
+		Random  random= new Random();
+		for (int j=0;j<8;j++){
+			   number+=random.nextInt(9);
+		}
+		System.out.println(number);
+	   return number;
+	}
+
+	/**
+	 * md5加密
+	 */
+
+	public String md5Util(String str) throws Exception {
+		MessageDigest md5 = MessageDigest.getInstance("md5");
+		byte[] digest = md5.digest(str.getBytes());
+
+		//Base64编码  它的作用是用于将非ascii码转成ascii码
+		BASE64Encoder b64 = new BASE64Encoder();
+		return b64.encode(digest);
+	}
 	@Test
 	public void test2(){
 

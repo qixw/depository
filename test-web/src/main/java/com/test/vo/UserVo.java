@@ -1,6 +1,7 @@
 package com.test.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author ：qixuewei@jinlianchu.com
@@ -21,6 +22,16 @@ public class UserVo implements Serializable{
 	public int isLimit;
 
 	public String remark;
+
+	public Date regDate;
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
 	public String getPassword() {
 		return password;
